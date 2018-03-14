@@ -5,7 +5,6 @@ from sys import stdout, stderr, argv
 from os import listdir, path, getcwd, walk
 from re import match, compile as re_compile
 
-
 re_fort = re_compile(r'(.*)\.[fF](90|95|03|08|)$')
 re_module = re_compile(r'^\s*(module|program|submodule\s*\(\s*([a-zA-Z0-9_]+)\s*\))\s+([a-zA-Z0-9_]+)')
 re_submodule = re_compile(r'submodule\s*\(\s*([a-zA-Z0-9_]+)\s*\)')
@@ -274,8 +273,7 @@ def main():
     for tgt,dep in broken_deps:
         modules_uses[tgt].remove(dep)
 
-    deps_sort = modules_uses.items()
-    deps_sort.sort(cmp = lambda hi,lo: 1 if hi[0] > lo[0] else ( -1 if hi[0] < lo[0] else 0 ))
+    deps_sort = sorted(modules_uses.items())
     dependencies = [ Dependency([tgt], deps) for tgt,deps in deps_sort if len(deps) > 0 ]
 
     if args.optimize > 0:
